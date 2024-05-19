@@ -5,65 +5,38 @@
 #Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 #You may assume that each input would have exactly one solution, and you may not use the same element twice.
 #Example: [2,3,4,2,7] target = 10, output = [1,4]
-from memory_profiler import profile
-import math
-import time
-import numpy as np
 
-
-@profile(precision=4)
 def twoSum(nums, target):
     #your code goes here
-    start = time.time()
-
-    _nums = nums.copy() #Really don't like that the array was copied but couldn't think about another way of doing it
-    _nums.sort()
-
-    jump_amount = math.floor(math.sqrt(len(_nums)))
-    while jump_amount < len(_nums):
-        if _nums[jump_amount] >= target:
-            break
-        jump_amount += 1
-    jump_amount -= 1
-    result = []
-
-    #print("original {}".format(nums))
-    #print("sorted {}".format(_nums))
-    #print("jump_amount start {}".format(jump_amount))
-
-    while jump_amount > 1:
-        for i in range(jump_amount):
-            if _nums[i] + _nums[jump_amount] == target:
-                result.append(nums.index(_nums[i]))
-                result.append(nums.index(_nums[jump_amount]))
-                break
-        jump_amount -= 1
-
-    if result == []:
-        print("No matching numbers were found")
-    end = time.time()
-    print("_______________________________")
-    print("Time:{}".format(end - start))
-    print("_______________________________")
-    return result
-
-
-
+    _map = {}
+    for i, n in enumerate(nums):
+        diff = target - n
+        if diff in _map:
+            return [_map[diff], i]
+        _map[n] = i
 
 a = [1,4,3,10,9,23,11]
 res = 11
 print("Two sums: {}". format(twoSum(a, res)))
-#Time and space complexity:
+#Time and space complexity: T: O(n) M O(n)
 
 #Question 2:
 #Given some arrays with strings on them, find the most common longest prefix among them.
 #Example: ["flower","flow","flight"] output = "fl"
-
 def findMostCommonPrefix(arr):
     #your code goes here
-    pass
+    arr.sort()
+    result = []
+    for i in range(len(arr[0])):
+        if arr[0][i] == arr[len(arr) - 1][i]:
+            result.append(arr[0][i])
 
-#Time and space complexity:
+    return "".join(result)
+
+arr = ["flower","flow","flight"]
+print("Common longest prefix: {}".format(findMostCommonPrefix(arr)))
+
+#Time and space complexity: T O(1) S O(1)
 
 #Question 3:
 #Given an array of integers, return the indices of three numbers that add up to 0.
@@ -114,13 +87,33 @@ middle.next = tail
 tail.next = None
 
 printList(head)
-
 def reverseList(head):
     #your code goes here
-    pass
+    prev, curr = None, head
+    while curr:
+        next = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next
+    return(prev)
 
-#Time and space complexity:
+#Time and space complexity: T O(n) M O(1)
+head = reverseList(head)
+print("reversed:")
+printList(head)
 
+def reverseListRec(head): #recirsive
+    if not head:
+        return None
+    new_head = head
+    if head.next:
+        new_head = reverseListRec((head.next))
+        head.next.next = head
+    head.next = None
+    return new_head
+#Time and space complexity: T O(n) M O(n)
 
-
+print("reversed recursive:")
+head = reverseListRec(head)
+printList(head)
 
