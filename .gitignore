@@ -5,3 +5,5 @@ hou_assets/hda/backup/*
 *.bgeo.sc
 *.abc
 resources/publish_test*
+venv
+.idea
