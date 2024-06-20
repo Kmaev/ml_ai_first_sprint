@@ -6,4 +6,6 @@ hou_assets/hda/backup/*
 *.abc
 resources/publish_test*
 *.idea*
+backup
 Data Dictionary - carprices.xlsx
+
