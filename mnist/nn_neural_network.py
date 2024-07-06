@@ -1,10 +1,11 @@
+import pickle
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-from nn_data_utils import DataUtils
-from nn_metrics import Metrics
-from nn_encoders import Encoders
-from nn_activations import Activations
+#import matplotlib.pyplot as plt
+from mnist.nn_data_utils import DataUtils
+from mnist.nn_metrics import Metrics
+from mnist.nn_encoders import Encoders
+from mnist.nn_activations import Activations
 
 class NeuralNetwork:
     def __init__(self, data, samples=None, elements=None):
@@ -76,38 +77,13 @@ class NeuralNetwork:
             if epoch % 10 == 0:
                 print("Epoch: ", epoch +1)
                 preds = self.get_predictions(a2)
-                print(self.get_accuracy(preds, y))
+                #print(self.get_accuracy(preds, y))
 
         return w1, b1, w2, b2
 
 
-if __name__ == "__main__":
-    data = pd.read_csv("train.csv")
-    neural_model = NeuralNetwork(data)
-    dataset = DataUtils(data)
 
-    X_train, X_test, y_train, y_test = dataset.train_test_split(data)
 
-    w1,b1,w2,b2 = neural_model.gradient_descent(X_train, y_train, 0.1, 500)
-
-    def make_predictions(X, W1, b1, W2, b2):
-        _, _, _, A2 = neural_model.forward(W1, b1, W2, b2, X)
-        predictions = neural_model.get_predictions(A2)
-        return predictions
-
-    def test_prediction(index, W1, b1, W2, b2):
-        current_image = X_train[:, index, None]
-        prediction = make_predictions(X_train[:, index, None], W1, b1, W2, b2)
-        label = y_train[index]
-        print("Prediction: ", prediction)
-        print("Label: ", label)
-
-        current_image = current_image.reshape((28, 28)) * 255
-        plt.gray()
-        plt.imshow(current_image, interpolation='nearest')
-        plt.show()
-
-    test_prediction(0, w1, b1, w2, b2)
 
 
 
