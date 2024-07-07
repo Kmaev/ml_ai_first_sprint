@@ -7,16 +7,17 @@ from mnist.nn_metrics import Metrics
 from mnist.nn_encoders import Encoders
 from mnist.nn_activations import Activations
 
+
 class NeuralNetwork:
     def __init__(self, data, samples=None, elements=None):
         self.data = data
         self.samples, self.elements = self.data.shape
 
     def initialize_parameters(self):
-        w1 = np.random.rand(10, 784)
-        b1 = np.random.rand(10, 1)
-        w2 = np.random.rand(10,10)
-        b2 = np.random.rand(10,1)
+        w1 = np.random.rand(10, 784) - 0.5
+        b1 = np.random.rand(10, 1) - 0.5
+        w2 = np.random.rand(10,10) - 0.5
+        b2 = np.random.rand(10,1) - 0.5
 
         return w1,b1,w2,b2
 
@@ -64,7 +65,6 @@ class NeuralNetwork:
     def get_predictions(self, x):
         return np.argmax(x,0)
 
-
     def get_accuracy(self, preds, y):
         a = Metrics()
         return a.get_accuracy(preds, y)
@@ -80,15 +80,38 @@ class NeuralNetwork:
                 preds = self.get_predictions(a2)
                 print(self.get_accuracy(preds, y))
 
-
-
-
         return w1, b1, w2, b2
 
 
 
 
+'''if __name__ == "__main__":
+    data = pd.read_csv("/home/kmaev/dev/ML_Rebelway_course/ml_course_homework/train.csv")
 
+    neural_model = NeuralNetwork(data)
+    dataset = DataUtils(data)
 
+    X_train, X_test, y_train, y_test = dataset.train_test_split(data)
 
+    w1,b1,w2,b2 = neural_model.gradient_descent(X_train, y_train, 0.1, 500)
 
+    def make_predictions(X, W1, b1, W2, b2):
+        _, _, _, A2 = neural_model.forward(W1, b1, W2, b2, X)
+        predictions = neural_model.get_predictions(A2)
+        return predictions
+
+    def test_prediction(index, W1, b1, W2, b2):
+        current_image = X_train[:, index, None]
+        prediction = make_predictions(X_train[:, index, None], W1, b1, W2, b2)
+        label = y_train[index]
+        print("Prediction: ", prediction)
+        print("Label: ", label)
+        weights = (w1, b1, w2, b2)
+        filename = "finalised_model_03.sav"
+        #pickle.dump(weights, open(filename, "wb"))
+        current_image = current_image.reshape((28, 28)) * 255
+        plt.gray()
+        plt.imshow(current_image, interpolation='nearest')
+        plt.show()
+
+    test_prediction(0, w1, b1, w2, b2)'''
