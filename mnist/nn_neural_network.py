@@ -13,10 +13,10 @@ class NeuralNetwork:
         self.samples, self.elements = self.data.shape
 
     def initialize_parameters(self):
-        w1 = np.random.rand(10, 784) - 0.5
-        b1 = np.random.rand(10, 1) - 0.5
-        w2 = np.random.rand(10,10) - 0.5
-        b2 = np.random.rand(10,1) - 0.5
+        w1 = np.random.rand(10, 784)
+        b1 = np.random.rand(10, 1)
+        w2 = np.random.rand(10,10)
+        b2 = np.random.rand(10,1)
 
         return w1,b1,w2,b2
 
@@ -64,6 +64,7 @@ class NeuralNetwork:
     def get_predictions(self, x):
         return np.argmax(x,0)
 
+
     def get_accuracy(self, preds, y):
         a = Metrics()
         return a.get_accuracy(preds, y)
@@ -77,9 +78,13 @@ class NeuralNetwork:
             if epoch % 10 == 0:
                 print("Epoch: ", epoch +1)
                 preds = self.get_predictions(a2)
-                #print(self.get_accuracy(preds, y))
+                print(self.get_accuracy(preds, y))
+
+
+
 
         return w1, b1, w2, b2
+
 
 
 
