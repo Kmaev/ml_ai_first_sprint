@@ -1,7 +1,10 @@
 *.pyc
 scenes/backup/*
-hou_assets/hda/backup/*
+
 */backup/*
 *.bgeo.sc
 *.abc
-resources/publish_test*
+*data*
+*backup*
+*idea
+
